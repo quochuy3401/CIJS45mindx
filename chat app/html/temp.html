@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp</title>
+    <link rel="stylesheet" href="..//css//style.css">
+    <link rel="stylesheet" href="..//css/register.css">
+    <link rel="stylesheet" href="..//css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="aside-right">
+            <div class="header">
+                <h3>MindX chat</h3>
+            </div>
+            <div>
+                <form id="login-form">
+                    <div class="input-wrapper">
+                        <input type="email" name="email" placeholder="Email...">
+                        <div class="error" id="email-error"></div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="password" name="password" placeholder="Password...">
+                        <div class="error" id="password-error"></div>
+                    </div>
+                    <div class="form-action">
+                        <span id="redirect-to-register" onclick='view.setActiveScreen("loginScreen")'> Don't have an acount? Register.</span>
+                        <button type="submit" class="btn">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
