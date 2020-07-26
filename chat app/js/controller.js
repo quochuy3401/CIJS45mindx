@@ -21,24 +21,24 @@ controller.register=(data)=>{
         document.getElementById('confirm-password-error').innerText='*Please confirm password.'
     }
     if(data.password != data.confirmPassword && data.password.trim()!='' && data.confirmPassword.trim()!=''){
-        document.getElementById('confirm-password-error').innerText='*Password is not available.'
+        document.getElementById('confirm-password-error').innerText="*Password didn't match."
     }
     if(data.firstName!='' && data.lastName!='' && data.email!='' && data.password!='' && data.confirmPassword!='' && data.password===data.confirmPassword){
         model.register(data);
     }
 };
 
-controller.login=(data) =>{
+controller.login=(dataLogin) =>{
     document.getElementById('email-error').innerText='';
     document.getElementById('password-error').innerText='';
-    if(data.email===''){
+    if(dataLogin.email===''){
         document.getElementById('email-error').innerText='*Please input email.'
     }
-    if(data.password===''){
+    if(dataLogin.password===''){
         document.getElementById('password-error').innerText='*Please input password.'
     }
-    if(data.email != ''&& data.password!= ''){
-        model.login(data)
+    if(dataLogin.email != ''&& dataLogin.password!= ''){
+        model.login(dataLogin)
     }
 }
 
