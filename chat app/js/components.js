@@ -63,6 +63,9 @@ components.loginScreen=`<div class="login-container">
     </div>
 </div>
 </div>`
-components.chatScreen = (displayName) => {
-    return `<h1> Welcome ${displayName} </h1>`
-}
+// components.chatScreen = (displayName) => {
+//     return `<h1> Welcome ${displayName} </h1>`
+// }
+components.chatScreen =`
+<div id='welcome-user'></div>
+`

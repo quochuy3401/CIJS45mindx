@@ -35,7 +35,8 @@ const view={};
             })
             break;
         case 'chatScreen' :
-            document.getElementById('app').innerHTML=components.chatScreen(model.currentUser.displayName) ;
-            
+            document.getElementById('app').innerHTML=components.chatScreen ;
+            document.getElementById('welcome-user').innerText=`Welcome ${model.currentUser.displayName}`
+            break;
     }
 }

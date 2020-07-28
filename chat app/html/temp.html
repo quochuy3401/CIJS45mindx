@@ -7,27 +7,28 @@
     <link rel="stylesheet" href="..//css//style.css">
     <link rel="stylesheet" href="..//css/register.css">
     <link rel="stylesheet" href="..//css/login.css">
+    <link rel="stylesheet" href="..//css/chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="aside-right">
-            <div class="header">
-                <h3>MindX chat</h3>
-            </div>
-            <div>
-                <form id="login-form">
+    <div class="chat-container">
+        <div class="header">
+            Mindx chat
+        </div>
+        <div class="main">
+            <div class="conversation-detail">
+                <div class="conversation-header">
+                    First conversation
+                </div>
+                <div class="list-message">
+
+                </div>
+                <form id="send-message-form">
                     <div class="input-wrapper">
-                        <input type="email" name="email" placeholder="Email...">
-                        <div class="error" id="email-error"></div>
+                        <input type="text" name="message" placeholder="Type a message">
                     </div>
-                    <div class="input-wrapper">
-                        <input type="password" name="password" placeholder="Password...">
-                        <div class="error" id="password-error"></div>
-                    </div>
-                    <div class="form-action">
-                        <span id="redirect-to-register" onclick='view.setActiveScreen("loginScreen")'> Don't have an acount? Register.</span>
-                        <button type="submit" class="btn">Login</button>
-                    </div>
+                    <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </button>
                 </form>
             </div>
         </div>
