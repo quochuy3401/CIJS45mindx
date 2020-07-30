@@ -53,3 +53,46 @@ model.login = async (dataLogin) => {
     }
   }
 }
+
+model.chat = async () => {
+   try {
+     firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      console.log(user);
+      model.currentUser = {
+        displayName: user.displayName,
+        email: user.email
+      }
+      view.setActiveScreen('chatScreen')
+    } else {
+      // User chua loginlogin
+      view.setActiveScreen('registerScreen');
+    }
+  });
+} catch(error) {
+  console.log(error.message);
+}
+
+  // try {
+  //    await firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       // User is signed in.
+  //       if (user.emailVerified) {
+  //         model.currentUser = {
+  //           displayName: user.displayName,
+  //           email: user.email
+  //         }
+  //         view.setActiveScreen('chatScreen')
+  //       } else {
+  //         view.setActiveScreen('loginScreen')
+  //         alert('Please verify your email')
+  //       }
+  //     } else {
+  //       view.setActiveScreen('loginScreen')
+  //     }
+  //   });
+  // } catch (error) {
+  //   alert(error.message)
+  // }
+}

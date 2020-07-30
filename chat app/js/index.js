@@ -14,19 +14,23 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 console.log(firebase.app().name);
-   view.setActiveScreen('registerScreen');
-   
 
-   firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      model.currentUser = {
-        displayName: user.displayName,
-        email: user.email
-      }
-      view.setActiveScreen('chatScreen')
-    }
-  });
+model.chat()
+  //  view.setActiveScreen('registerScreen');
+   
+  //  firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     // User is signed in.
+  //     model.currentUser = {
+  //       displayName: user.displayName,
+  //       email: user.email
+  //     }
+  //     view.setActiveScreen('chatScreen')
+  //   } else {
+  //     // User chua loginlogin
+  //     view.setActiveScreen('registerScreen');
+  //   }
+  // });
 }
 window.onload=init;
 
