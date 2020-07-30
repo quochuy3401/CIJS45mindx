@@ -1,4 +1,4 @@
-.header{
+.chat-container .header{
     text-align: center;
     height: 64px;
     background: #037bfe;
@@ -49,4 +49,28 @@
 }
 #send-message-form .input-wrapper{
     margin-bottom: 0;
+}
+.chat-container .list-message{
+    padding: 10px;
+    overflow-y: auto;
+}
+.chat-container .list-message .message-container{
+    margin-bottom: 10px;
+}
+.chat-container .message-container .content{
+    padding: 7px 10px;
+    border-radius: 3px;
+    max-width: 40%;
+    width: max-content;
+}
+.chat-container .message-container.their .content{
+background: #dadbdb;
+}
+.chat-container .message-container.mine .content{
+    background: #037bfe;
+    color: #ffffff;
+}
+.chat-container .message-container.mine{
+    display: flex;
+    justify-content: flex-end;
 }

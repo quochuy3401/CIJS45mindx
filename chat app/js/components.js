@@ -67,5 +67,26 @@ components.loginScreen=`<div class="login-container">
 //     return `<h1> Welcome ${displayName} </h1>`
 // }
 components.chatScreen =`
-<div id='welcome-user'></div>
+<div class="chat-container">
+<div class="header">
+    Mindx chat
+</div>
+<div class="main">
+    <div class="conversation-detail">
+        <div class="conversation-header">
+            First conversation
+        </div>
+        <div class="list-message">
+            
+        </div>
+        <form id="send-message-form">
+            <div class="input-wrapper">
+                <input type="text" name="message" placeholder="Type a message">
+            </div>
+            <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+</div>
+</div>
 `

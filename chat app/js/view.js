@@ -35,8 +35,51 @@ const view={};
             })
             break;
         case 'chatScreen' :
-            document.getElementById('app').innerHTML=components.chatScreen ;
-            document.getElementById('welcome-user').innerText=`Welcome ${model.currentUser.displayName}`
+            document.getElementById('app').innerHTML=components.chatScreen 
+            const sendMessageForm= document.getElementById('send-message-form')
+            sendMessageForm.addEventListener('submit', (e)=>{
+                e.preventDefault()
+                const message={
+                    content: sendMessageForm.message.value,
+                    owner: model.currentUser.email
+                }
+                const botMsg={
+                    content: sendMessageForm.message.value,
+                    owner: 'Bot'
+                }
+                // khi nguoi dung khong dien hoac dien toan dau cach thi khong gui duoc
+                if(message.content.trim() != ''){
+                    view.addMessage(message)
+                    view.addMessage(botMsg)
+                }
+                sendMessageForm.message.value=''
+                //console.log(sendMessageForm.message.value);
+            })
             break;
     }
+}
+
+view.addMessage=(message) => {
+    const messageWrapper = document.createElement('div')
+    messageWrapper.classList.add('message-container')
+    if(message.owner === model.currentUser.email){
+        messageWrapper.classList.add('mine')
+        messageWrapper.innerHTML=`
+        <div class="content">
+        ${message.content}
+        </div>
+        `
+    } else {
+        messageWrapper.classList.add('their')
+        messageWrapper.innerHTML=`
+        <div class="owner">
+            ${message.owner}
+        </div>
+        <div class="content">
+            ${message.content}
+        </div>
+        `
+
+    }
+    document.querySelector('.list-message').appendChild(messageWrapper)
 }

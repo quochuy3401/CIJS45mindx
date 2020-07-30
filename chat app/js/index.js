@@ -16,6 +16,17 @@ firebase.initializeApp(firebaseConfig);
 console.log(firebase.app().name);
    view.setActiveScreen('registerScreen');
    
+
+   firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      model.currentUser = {
+        displayName: user.displayName,
+        email: user.email
+      }
+      view.setActiveScreen('chatScreen')
+    }
+  });
 }
 window.onload=init;
 
