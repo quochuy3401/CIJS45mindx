@@ -41,7 +41,8 @@ const view={};
                 e.preventDefault()
                 const message={
                     content: sendMessageForm.message.value,
-                    owner: model.currentUser.email
+                    owner: model.currentUser.email,
+                    createdAt: new Date().toISOString()
                 }
                 const botMsg={
                     content: sendMessageForm.message.value,
@@ -51,6 +52,12 @@ const view={};
                 if(message.content.trim() != ''){
                     view.addMessage(message)
                     view.addMessage(botMsg)
+                    const documentIdUpdate='j8BiExiYwBuruWKkyHpU'
+                    const messageToAdd={
+                        messages: firebase.firestore.FieldValue.arrayUnion(message)
+                      }
+                      firebase.firestore().collection('conversations').doc(documentIdUpdate).update(messageToAdd)
+
                 }
                 sendMessageForm.message.value=''
                 //console.log(sendMessageForm.message.value);
