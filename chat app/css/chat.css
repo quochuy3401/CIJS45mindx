@@ -62,6 +62,7 @@
     border-radius: 3px;
     max-width: 40%;
     width: max-content;
+    word-break: break-all;
 }
 .chat-container .message-container.their .content{
 background: #dadbdb;

@@ -44,25 +44,26 @@ const view={};
                     owner: model.currentUser.email,
                     createdAt: new Date().toISOString()
                 }
-                const botMsg={
-                    content: sendMessageForm.message.value,
-                    owner: 'Bot'
-                }
+                // const botMsg={
+                //     content: sendMessageForm.message.value,
+                //     owner: 'Bot'
+                // }
                 // khi nguoi dung khong dien hoac dien toan dau cach thi khong gui duoc
                 if(message.content.trim() != ''){
-                    view.addMessage(message)
-                    view.addMessage(botMsg)
-                    const documentIdUpdate='j8BiExiYwBuruWKkyHpU'
-                    const messageToAdd={
-                        messages: firebase.firestore.FieldValue.arrayUnion(message)
-                      }
-                      firebase.firestore().collection('conversations').doc(documentIdUpdate).update(messageToAdd)
+                    model.addMessage(message)
+                    // view.addMessage(botMsg)
+                    // const documentIdUpdate='j8BiExiYwBuruWKkyHpU'
+                    // const messageToAdd={
+                    //     messages: firebase.firestore.FieldValue.arrayUnion(message)
+                    //   }
+                    //   firebase.firestore().collection('conversations').doc(documentIdUpdate).update(messageToAdd)
 
                 }
                 sendMessageForm.message.value=''
                 //console.log(sendMessageForm.message.value);
             })
-            break;
+            model.loadConversations();
+            model.listenConversationsChange();
     }
 }
 
@@ -89,4 +90,19 @@ view.addMessage=(message) => {
 
     }
     document.querySelector('.list-message').appendChild(messageWrapper)
+}
+
+view.showCurrentConversation=()=>{
+    // doi ten cuoc tro chuyen
+document.getElementsByClassName('conversation-header')[0].innerText=model.currentConversation.title
+    for(message of model.currentConversation.messages){
+        view.addMessage(message)
+    }
+    view.scrollToEndElement()
+    // in cac tin nahn len man hinh
+
+}
+view.scrollToEndElement = () =>{
+    const element = document.querySelector('.list-message')
+    element.scrollTop=element.scrollHeight
 }
