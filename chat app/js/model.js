@@ -120,6 +120,7 @@ model.loadConversations= async ()=>{
     model.currentConversation= model.conversations[0];
     view.showCurrentConversation()
   }
+  view.showConversations()
 }
 
 model.listenConversationsChange=()=>{
@@ -156,4 +157,14 @@ model.listenConversationsChange=()=>{
       }
     }
   })
+}
+
+model.createConversation=(dataCreate)=>{
+  const conversationToAdd={
+    createdAt: new Date().toISOString(),
+    title: dataCreate.title,
+    users: ['huyapolo34@gmail.com', dataCreate.email]
+  }
+  firebase.firestore().collection('conversations').add(conversationToAdd)
+
 }

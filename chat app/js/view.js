@@ -1,5 +1,5 @@
 const view={};
-    view.setActiveScreen=(screenName)=>{
+    view.setActiveScreen=(screenName, fromCreateConversation=false)=>{
         switch (screenName) {
         case 'welcomeScreen' :
             document.getElementById('app').innerHTML=components.welcomeScreen;
@@ -62,8 +62,36 @@ const view={};
                 sendMessageForm.message.value=''
                 //console.log(sendMessageForm.message.value);
             })
-            model.loadConversations();
-            model.listenConversationsChange();
+            if(!fromCreateConversation){
+                model.loadConversations();
+                model.listenConversationsChange();
+            } else{
+                view.showConversations()
+                view.showCurrentConversation()
+            }
+            document.querySelector('.create-conversation .btn').addEventListener('click', ()=>{
+                view.setActiveScreen('createConversation')
+            })
+            break;
+        case 'createConversation':
+                document.getElementById('app').innerHTML=components.createConversation
+                document.querySelector('#back-to-chat').addEventListener('click', () =>{
+                    view.setActiveScreen('chatScreen', true)
+                })
+                const createConversationForm=document.getElementById('create-conversation-form')
+                createConversationForm.addEventListener('submit', (e)=>{
+                    e.preventDefault()
+                    const dataCreate ={
+                        title : createConversationForm.conversationTitle.value,
+                        email : createConversationForm.conversationEmail.value
+                    }
+                    controller.createConversation(dataCreate)
+                    if(dataCreate.title.trim()!= '' && dataCreate.email.trim()!=''){
+                        view.setActiveScreen('chatScreen', true)
+                    }
+                })    
+                
+            break;
     }
 }
 
@@ -93,6 +121,7 @@ view.addMessage=(message) => {
 }
 
 view.showCurrentConversation=()=>{
+    document.querySelector('.list-message').innerHTML=''
     // doi ten cuoc tro chuyen
 document.getElementsByClassName('conversation-header')[0].innerText=model.currentConversation.title
     for(message of model.currentConversation.messages){
@@ -105,4 +134,32 @@ document.getElementsByClassName('conversation-header')[0].innerText=model.curren
 view.scrollToEndElement = () =>{
     const element = document.querySelector('.list-message')
     element.scrollTop=element.scrollHeight
+}
+
+view.showConversations =() =>{
+    for(oneConversation of model.conversations){
+        view.addConversation(oneConversation)
+    }
+}
+
+view.addConversation=(conversation)=>{
+    const conversationWrapper = document.createElement('div')
+    conversationWrapper.className=' conversation cursor-pointer'
+    if(model.currentConversation.id === conversation.id){
+        conversationWrapper.classList.add('current')
+    }
+    conversationWrapper.innerHTML=`
+    <div class="conversation-title">${conversation.title}</div>
+    <div class="conversation-num-user">${conversation.users.length} users</div>
+    `
+    conversationWrapper.addEventListener('click', () => {
+        //thay doi giao dien, doi current
+        document.querySelector('.current').classList.remove('current')
+        conversationWrapper.classList.add('current')
+        // thay doi model.currentConversation
+        model.currentConversation=conversation
+        //in cac tin nhan cua model.currentConversation len man hinh
+        view.showCurrentConversation()
+    })
+    document.querySelector('.list-conversations').appendChild(conversationWrapper)
 }

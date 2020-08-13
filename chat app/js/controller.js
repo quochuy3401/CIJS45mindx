@@ -42,3 +42,16 @@ controller.login=(dataLogin) =>{
     }
 }
 
+controller.createConversation=(dataCreate) =>{
+    document.getElementById('conversation-name-error').innerText=''
+    document.getElementById('conversation-email-error').innerText=''
+    if(dataCreate.title.trim() === ''){
+        document.getElementById('conversation-name-error').innerText='*Please input name of conversation.'
+    }
+    if(dataCreate.email.trim()===''){
+        document.getElementById('conversation-email-error').innerText='*Please input email.'
+    }
+    if(dataCreate.title!='' && dataCreate.email!=''){
+        model.createConversation(dataCreate)
+    }
+}
