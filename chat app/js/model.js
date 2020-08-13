@@ -163,6 +163,7 @@ model.createConversation=(dataCreate)=>{
   const conversationToAdd={
     createdAt: new Date().toISOString(),
     title: dataCreate.title,
+    messages: [],
     users: ['huyapolo34@gmail.com', dataCreate.email]
   }
   firebase.firestore().collection('conversations').add(conversationToAdd)
