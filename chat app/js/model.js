@@ -103,7 +103,7 @@ model.login = async (dataLogin) => {
 //   }
 // }
 model.addMessage=(message)=>{
-  const documentIdUpdate='j8BiExiYwBuruWKkyHpU'
+  const documentIdUpdate= model.currentConversation.id
     const messageToAdd={
          messages: firebase.firestore.FieldValue.arrayUnion(message)
     }
@@ -128,6 +128,7 @@ model.listenConversationsChange=()=>{
   firebase.firestore().collection(model.collectionName)
   .where('users','array-contains',model.currentUser.email)
   .onSnapshot((res) => {
+    console.log(res);
     if(isFirstRun){
       isFirstRun = false
       return
@@ -140,6 +141,11 @@ model.listenConversationsChange=()=>{
       if(type === 'modified'){
         const docData= getDataFromDoc(oneChange.doc)
         console.log(docData);
+        if (docData.users.length > model.currentConversation.users.length) {
+          // update list users
+          view.addUser(docData.users[docData.users.length - 1])
+          model.currentConversation.users.push(docData.users[docData.users.length - 1])
+        } else {
         // update lai model.conversations
         for(let i=0; i<model.conversations.length; i++){
           if(model.conversations[i].id === docData.id){
@@ -155,17 +161,33 @@ model.listenConversationsChange=()=>{
           view.scrollToEndElement()
         }
       }
+      }
+      if(type === 'added'){
+        const docData =getDataFromDoc(oneChange.doc)
+        // them conversation moi add
+        model.conversations.push(docData)
+        view.addConversation(docData)
+      }
     }
   })
 }
 
-model.createConversation=(dataCreate)=>{
+model.createConversation= (dataCreate)=>{
   const conversationToAdd={
     createdAt: new Date().toISOString(),
     title: dataCreate.title,
     messages: [],
-    users: ['huyapolo34@gmail.com', dataCreate.email]
+    users: [model.currentUser.email, dataCreate.email]
   }
-  firebase.firestore().collection('conversations').add(conversationToAdd)
+    firebase.firestore().collection('conversations').add(conversationToAdd)
+  view.setActiveScreen('chatScreen', true)
+}
 
+model.addUser=(friendEmail) =>{
+  const documentIdUpdate=model.currentConversation.id
+  const dataToUpdate = {
+    users: firebase.firestore.FieldValue.arrayUnion(friendEmail)
+  }
+  firebase.firestore().collection('conversations').doc(documentIdUpdate).update(dataToUpdate)
+  console.log('done');
 }

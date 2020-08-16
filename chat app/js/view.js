@@ -72,6 +72,13 @@ const view={};
             document.querySelector('.create-conversation .btn').addEventListener('click', ()=>{
                 view.setActiveScreen('createConversation')
             })
+            const addUserForm= document.getElementById('add-user-form')
+            addUserForm.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const friendEmail= addUserForm.mail.value
+                controller.addUser(friendEmail)
+                addUserForm.mail.value=''
+            })
             break;
         case 'createConversation':
                 document.getElementById('app').innerHTML=components.createConversation
@@ -128,8 +135,22 @@ document.getElementsByClassName('conversation-header')[0].innerText=model.curren
         view.addMessage(message)
     }
     view.scrollToEndElement()
+    view.showListUser(model.currentConversation.users)
     // in cac tin nahn len man hinh
 
+}
+
+view.showListUser=(users)=>{
+    document.querySelector('.list-user').innerText=""
+    for(user of users){
+        view.addUser(user)
+    }
+}
+view.addUser=(user)=>{
+    const userWrapper = document.createElement('div')
+    userWrapper.classList.add('user')
+    userWrapper.innerText= user
+    document.querySelector('.list-user').appendChild(userWrapper)
 }
 view.scrollToEndElement = () =>{
     const element = document.querySelector('.list-message')
@@ -157,7 +178,12 @@ view.addConversation=(conversation)=>{
         document.querySelector('.current').classList.remove('current')
         conversationWrapper.classList.add('current')
         // thay doi model.currentConversation
-        model.currentConversation=conversation
+        for(oneConversation of model.conversations){
+            if(oneConversation.id ===conversation.id){
+                model.currentConversation=oneConversation
+
+            }
+        }
         //in cac tin nhan cua model.currentConversation len man hinh
         view.showCurrentConversation()
     })
