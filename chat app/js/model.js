@@ -145,12 +145,16 @@ model.listenConversationsChange=()=>{
           // update list users
           view.addUser(docData.users[docData.users.length - 1])
           model.currentConversation.users.push(docData.users[docData.users.length - 1])
+          view.updateNumberUsers(docData.id, docData.users.length)
         } else {
         // update lai model.conversations
         for(let i=0; i<model.conversations.length; i++){
           if(model.conversations[i].id === docData.id){
             model.conversations[i] = docData
           }
+        }
+        if(docData.messages[docData.messages.length-1].owner!=model.currentUser.email){
+          view.showModification(docData.id)
         }
         // update model.currentConversation
         if(docData.id === model.currentConversation.id){
@@ -161,6 +165,7 @@ model.listenConversationsChange=()=>{
           view.scrollToEndElement()
         }
       }
+     
       }
       if(type === 'added'){
         const docData =getDataFromDoc(oneChange.doc)

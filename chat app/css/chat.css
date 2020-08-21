@@ -90,6 +90,8 @@ background: #dadbdb;
 }
 .chat-container .list-conversations .conversation{
     padding: 5px 10px;
+    position: relative;
+    
 }
 .chat-container .list-conversations .conversation.current{
     background: #dbdbdb;
@@ -106,4 +108,34 @@ background: #dadbdb;
 }
 .chat-container #add-user-form{
     margin-top: 12px;
+}
+.chat-container .conversation .modification{
+    width: 15px;
+    height: 15px;
+    background-color: blue;
+    border-radius: 50%;
+    position: absolute;
+    right: 8px;
+    top: 13px;
+    display: none;
+}
+@media screen and (max-width : 768px){
+    .aside-right{
+        display: none;
+    }
+    .conversation-num-user{
+        display: none;
+    }
+    .chat-container .list-conversations .conversation{
+        border-radius: 50%;
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px auto;
+    }
+    .conversation .modification{
+        top: 23px !important;
+    }
 }

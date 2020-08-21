@@ -79,6 +79,10 @@ const view={};
                 controller.addUser(friendEmail)
                 addUserForm.mail.value=''
             })
+            document.querySelector('#send-message-form input')
+            .addEventListener('click',(e) =>{
+                view.hideModification(model.currentConversation.id)
+            })
             break;
         case 'createConversation':
                 document.getElementById('app').innerHTML=components.createConversation
@@ -166,13 +170,36 @@ view.showConversations =() =>{
 view.addConversation=(conversation)=>{
     const conversationWrapper = document.createElement('div')
     conversationWrapper.className=' conversation cursor-pointer'
+    conversationWrapper.id=conversation.id
     if(model.currentConversation.id === conversation.id){
         conversationWrapper.classList.add('current')
     }
     conversationWrapper.innerHTML=`
     <div class="conversation-title">${conversation.title}</div>
     <div class="conversation-num-user">${conversation.users.length} users</div>
+    <div class='modification'></div> 
     `
+    const mediaQuery= window.matchMedia('(max-width : 768px)')
+    console.log(mediaQuery);
+    if(mediaQuery.matches===true){
+        const firstCharacter= conversation.title.charAt(0).toUpperCase()
+        console.log(firstCharacter);
+        conversationWrapper.firstElementChild.innerText=firstCharacter
+        document.querySelector('.create-conversation .btn').innerText='+'
+    }
+    mediaQuery.addListener((e)=>{
+        if(e.matches){
+            const firstCharacter= conversation.title.charAt(0).toUpperCase()
+        console.log(firstCharacter);
+        conversationWrapper.firstElementChild.innerText=firstCharacter
+        document.querySelector('.create-conversation .btn').innerText='+'
+        } else {
+            const firstCharacter= conversation.title.charAt(0).toUpperCase()
+        console.log(firstCharacter);
+        conversationWrapper.firstElementChild.innerText=conversation.title
+        document.querySelector('.create-conversation .btn').innerText='New conversation'
+        }
+    })
     conversationWrapper.addEventListener('click', () => {
         //thay doi giao dien, doi current
         document.querySelector('.current').classList.remove('current')
@@ -186,6 +213,21 @@ view.addConversation=(conversation)=>{
         }
         //in cac tin nhan cua model.currentConversation len man hinh
         view.showCurrentConversation()
+        view.hideModification(conversation.id)
     })
     document.querySelector('.list-conversations').appendChild(conversationWrapper)
+}
+ view.updateNumberUsers=(docId, numberUsers)=>{
+    const conversation=document.getElementById(docId)
+    // conversation.lastElementChild.innerText=numberUsers+' users'
+    const secondChild=conversation.getElementsByTagName('div')[1]
+    secondChild.innerText=numberUsers+' users'
+ }
+ view.showModification=(conversationId)=>{
+     const conversation=document.getElementById(conversationId)
+     conversation.lastElementChild.style='display: block'
+ }
+ view.hideModification=(conversationId)=>{
+    const conversation=document.getElementById(conversationId)
+    conversation.lastElementChild.style='display: none'
 }

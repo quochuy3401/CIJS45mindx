@@ -31,3 +31,9 @@
 .cursor-pointer{
     cursor: pointer;
 }
+@media screen and (max-width : 768px){
+    .login-container .aside-right{
+        display: block;
+        width: 100%;
+    }
+}
